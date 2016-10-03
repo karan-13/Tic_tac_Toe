@@ -1,5 +1,4 @@
-// C++ program to find the next optimal move for
-// a player
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,11 +7,11 @@ struct Move
 	int row, col;
 };
 
-char player = 'x', opponent = 'o';
+char player = 'x';
+char opponent = 'o';
 
-// This function returns true if there are moves
-// remaining on the board. It returns false if
-// there are no moves left to play.
+
+
 bool isMovesLeft(char board[3][3])
 {
 	for (int i = 0; i<3; i++)
@@ -22,8 +21,7 @@ bool isMovesLeft(char board[3][3])
 	return false;
 }
 
-// This is the evaluation function as discussed
-// in the previous article ( http://goo.gl/sJgv68 )
+
 int evaluate(char b[3][3])
 {
 	// Checking for Rows for X or O victory.
@@ -70,13 +68,10 @@ int evaluate(char b[3][3])
 			return -10;
 	}
 
-	// Else if none of them have won then return 0
+	
 	return 0;
 }
 
-// This is the minimax function. It considers all
-// the possible ways the game can go and returns
-// the value of the board
 int minimax(char board[3][3], int depth, bool isMax)
 {
 	int score = evaluate(board);
@@ -125,24 +120,20 @@ int minimax(char board[3][3], int depth, bool isMax)
 		return best;
 	}
 
-	// If this minimizer's move
 	else
 	{
 		int best = 1000;
 
-		// Traverse all cells
+		
 		for (int i = 0; i<3; i++)
 		{
 			for (int j = 0; j<3; j++)
 			{
-				// Check if cell is empty
-				if (board[i][j]=='_')
+			if (board[i][j]=='_')
 				{
 					// Make the move
 					board[i][j] = opponent;
 
-					// Call minimax recursively and choose
-					// the minimum value
 					best = min(best,
 						minimax(board, depth+1, !isMax));
 
@@ -155,7 +146,6 @@ int minimax(char board[3][3], int depth, bool isMax)
 	}
 }
 
-// This will return the best possible move for the player
 Move findBestMove(char board[3][3])
 {
 	int bestVal = -1000;
@@ -163,9 +153,6 @@ Move findBestMove(char board[3][3])
 	bestMove.row = -1;
 	bestMove.col = -1;
 
-	// Traverse all cells, evalutae minimax function for
-	// all empty cells. And return the cell with optimal
-	// value.
 	for (int i = 0; i<3; i++)
 	{
 		for (int j = 0; j<3; j++)
@@ -183,9 +170,6 @@ Move findBestMove(char board[3][3])
 				// Undo the move
 				board[i][j] = '_';
 
-				// If the value of the current move is
-				// more than the best value, then update
-				// best/
 				if (moveVal > bestVal)
 				{
 					bestMove.row = i;
@@ -215,7 +199,6 @@ int main()
 	Move bestMove = findBestMove(board);
 
 	printf("The Optimal Move is :\n");
-	printf("ROW: %d COL: %d\n\n", bestMove.row,
-								bestMove.col );
+	printf("ROW: %d COL: %d\n\n", bestMove.row,bestMove.col );
 	return 0;
 }
